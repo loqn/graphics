@@ -92,8 +92,6 @@ int main() {
 	
 	SDL_Surface* surface = SDL_GetWindowSurface(window);
 	
-	//SDL_FillRect(surface, &rect, COLOR_WHITE);
-	
 	SDL_Event event;
 
 	struct Circle circle = {200,200,50};
@@ -109,17 +107,25 @@ int main() {
 			if (event.type == SDL_QUIT) {
 				running = 0;
 			}
-
+			
+			//move the circle to the mouse on click
 			if (event.type == SDL_MOUSEMOTION && event.motion.state != 0) {
 				circle.x = event.motion.x;
 				circle.y = event.motion.y;	
 			}
 		}
-		SDL_FillRect(surface, &eraser, COLOR_BLACK);		
+		//clear the surface
+		SDL_FillRect(surface, &eraser, COLOR_BLACK);
+
+		//circle 1: rays then circle itself		
 		draw_rays(surface, circle, rays, shadow, COLOR_RED);
 		fill_circle(surface, circle, COLOR_WHITE);
+
+		//circle 2: rays then circle itself
 		draw_rays(surface, shadow, shadows, circle, COLOR_BLUE);
 		fill_circle(surface, shadow, COLOR_WHITE);
+		
+		//update the display
 		SDL_UpdateWindowSurface(window);
 		SDL_Delay(10);
 	}
